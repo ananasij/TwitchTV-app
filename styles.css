@@ -1,0 +1,53 @@
+body {
+    background-color: black;
+}
+.main-container {
+    background-color: #C1E1A6;
+    padding: 30px;
+    max-width: 970px;
+    height: auto;
+}
+
+.channel-thumbnail {
+    height: 150px;
+}
+
+.channel-container,
+.js-search {
+    background-color: white;
+    margin: 15px 30px;
+    padding: 15px;
+    border-radius: 5px;
+}
+
+.js-search {
+    padding-top: 25px;
+}
+
+.clearButton {
+    margin: 30px;
+}
+
+.clearButton,
+.search-button {
+    background-color: #FF9009;
+    color: white;
+}
+
+.btn-online {
+    background-color: #118C4E;
+    color: white;
+}
+
+.btn-offline {
+    background-color: #585858;
+    color: white;
+}
+
+.custom-heading {
+    color: #FF9009;
+}
+
+.channel-description {
+    margin: 10px 0;
+}

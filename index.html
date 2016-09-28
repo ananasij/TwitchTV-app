@@ -7,13 +7,32 @@
     <link rel="stylesheet" href="lib/bootstrap-3.3.6/css/bootstrap.min.css"/>
 
     <script src="lib/jquery-3.1.0/jquery-3.1.0.min.js"></script>
+    <script src="TwitchTV-browser.js"></script>
     <script src="main.js"></script>
 </head>
 <body>
-<div class="container">
-    <div class="container js-search"></div>
-    <div class="container js-channels-list"></div>
-    <div class="container js-search-output "></div>
+<div class="container main-container">
+    <div class="row">
+        <h2 class="text-center custom-heading">TwitchTV browser</h2>
+    </div>
+    <div class="row" id="searchInputBlock">
+        <div class="js-search">
+            <form action="" class="js-search-form">
+                <div class="form-group">
+                    <input type="text" class="form-control form-control-custom js-title" placeholder="Browse channels by name"
+                           required autofocus />
+                </div>
+                <div class="form-group">
+                    <button type="submit" role=button class="btn search-button">Search</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+    <div class="row" id="searchOutputBlock">
+        <button role="button" class="btn clearButton hidden">Back to default channels</button>
+        <div class="js-channels-list"></div>
+    </div>
 </div>
 
 </body>
