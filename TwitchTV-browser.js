@@ -4,6 +4,7 @@ function TwitchTvBrowser($input, $output, startChannels) {
 
     var $channelsList = $output.find('.js-channels-list');
     var $clearButton = $output.find('.clearButton');
+    var isLoaded = false;
 
     init();
 
@@ -21,37 +22,27 @@ function TwitchTvBrowser($input, $output, startChannels) {
         showStartChannels();
     }
 
-
     function showStartChannels() {
-        startChannels.forEach(function(value) {
-            showChannel(value);
-        });
+        isLoaded = false;
+        showHideLoader(isLoaded);
+        GetChannelsData(startChannels, showChannels);
     }
 
-    function showChannel(channelName) {
-        var url = 'https://api.twitch.tv/kraken/streams/' + channelName
-            + '?client_id=3ayqtffruo2goxf0cvyp75wjm28g4pq&callback=?';
-        var channelData;
-
-        channelData = {
-            name: channelName
-        };
-        $.getJSON(url, function (json) {
-            console.log(json);
-            if (json.error) {
-                channelData.error = {
-                    description: json.message
-                };
-            } else {
-                if (json.stream) {
-                    channelData.stream = {
-                        description: json.stream.channel.status,
-                        icon: json.stream.preview.medium
-                    };
-                }
-            }
-            renderChannel(channelData);
+    function showChannels(channels) {
+        channels.forEach(function(channel) {
+            renderChannel(channel);
         });
+        isLoaded = true;
+        showHideLoader(isLoaded);
+    }
+
+    function showHideLoader(loaded) {
+        var $loader = $('#loaderImg');
+        if (loaded) {
+            $loader.addClass('hidden');
+        } else {
+            $loader.removeClass('hidden');
+        }
     }
 
     function renderChannel(channelData) {
@@ -90,7 +81,7 @@ function TwitchTvBrowser($input, $output, startChannels) {
             channelStatusLink.classList.add('btn', 'btn-online');
             iconImg.src = channelData.stream.icon;
             description.innerText = channelData.stream.description;
-        } else if(channelData.error) {
+        } else if (channelData.error) {
             channelStatusLink.innerText = 'Error';
             channelStatusLink.classList.add('btn', 'btn-danger');
             iconImg.src = 'https://d30y9cdsu7xlg0.cloudfront.net/png/45088-200.png';
@@ -105,7 +96,7 @@ function TwitchTvBrowser($input, $output, startChannels) {
         textElements = [channelTitle, channelStatusLink, description];
         textElementsBlock = document.createElement('div');
         textElementsBlock.classList.add('col-sm-8');
-        textElements.forEach(function (value) {
+        textElements.forEach(function(value) {
             textElementsBlock.appendChild(value);
         });
 
@@ -119,10 +110,14 @@ function TwitchTvBrowser($input, $output, startChannels) {
     }
 
     function searchChannel(channelName) {
-        clearChannelsList();
-        showChannel(channelName);
-        $clearButton.removeClass('hidden');
-        $title.val('');
+        if (isLoaded) {
+            clearChannelsList();
+            isLoaded = false;
+            showHideLoader(isLoaded);
+            GetChannelsData([channelName], showChannels);
+            $clearButton.removeClass('hidden');
+            $title.val('');
+        }
     }
 
     function clearChannelsList() {
