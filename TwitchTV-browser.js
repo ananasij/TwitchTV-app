@@ -24,7 +24,7 @@ function TwitchTvBrowser($input, $output, startChannels) {
 
     function showStartChannels() {
         isLoaded = false;
-        showHideLoader(isLoaded);
+        showHideLoader();
         GetChannelsData(startChannels, showChannels);
     }
 
@@ -33,12 +33,12 @@ function TwitchTvBrowser($input, $output, startChannels) {
             renderChannel(channel);
         });
         isLoaded = true;
-        showHideLoader(isLoaded);
+        showHideLoader();
     }
 
-    function showHideLoader(loaded) {
+    function showHideLoader() {
         var $loader = $('#loaderImg');
-        if (loaded) {
+        if (isLoaded) {
             $loader.addClass('hidden');
         } else {
             $loader.removeClass('hidden');
@@ -113,7 +113,7 @@ function TwitchTvBrowser($input, $output, startChannels) {
         if (isLoaded) {
             clearChannelsList();
             isLoaded = false;
-            showHideLoader(isLoaded);
+            showHideLoader();
             GetChannelsData([channelName], showChannels);
             $clearButton.removeClass('hidden');
             $title.val('');

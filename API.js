@@ -11,20 +11,7 @@ function GetChannelsData(channels, onComplete) {
             jsonp: 'callback',
             dataType: 'jsonp',
             success: function(json) {
-                var channelData = {
-                    name: value
-                };
-                if (json.error) {
-                    channelData.error = {
-                        description: json.message
-                    };
-                } else if (json.stream) {
-                    channelData.stream = {
-                        description: json.stream.channel.status,
-                        icon: json.stream.preview.medium
-                    };
-                }
-                results[index] = channelData;
+                results[index] = composeResults(value, json);
             },
             error: function() {
                 results[index] = 'something went wrong';
@@ -37,4 +24,21 @@ function GetChannelsData(channels, onComplete) {
             }
         });
     });
+
+    function composeResults(channelName, json) {
+        var channelData = {
+            name: channelName
+        };
+        if (json.error) {
+            channelData.error = {
+                description: json.message
+            };
+        } else if (json.stream) {
+            channelData.stream = {
+                description: json.stream.channel.status,
+                icon: json.stream.preview.medium
+            };
+        }
+        return channelData;
+    }
 }
