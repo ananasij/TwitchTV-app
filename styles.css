@@ -2,7 +2,7 @@ body {
     background-color: black;
 }
 .main-container {
-    background-color: #C1E1A6;
+    background-color: #E2F1D6;
     padding: 30px;
     max-width: 970px;
     height: auto;
@@ -45,7 +45,7 @@ body {
 }
 
 .custom-heading {
-    color: #FF9009;
+    color: #E88000;
 }
 
 .channel-description {
